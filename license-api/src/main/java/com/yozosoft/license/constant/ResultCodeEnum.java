@@ -11,6 +11,24 @@ public enum ResultCodeEnum {
     E_FAIL(1, "操作失败"),
     E_INVALID_PARAM(3, "参数校验失败,请检查参数合法性"),
     E_SERVER_UNKNOWN_ERROR(4, "服务未知错误"),
+
+    E_STRATEGY_NULL(1000, "限制策略初始化失败"),
+
+    E_REGISTER_FAIL(1001, "当前服务注册授权中心失败"),
+
+    E_INSTANCE_SERVICE_NOT_EXIST(1002, "实例集群不存在,请重新注册"),
+
+    E_HEARTBEAT_INSTANCE_NOT_EXIST(1003, "心跳监测异常,实例不存在"),
+
+    E_HEARTBEAT_INSTANCE_MATCH_FAIL(1004, "心跳监测异常,实例检查失败"),
+
+    E_HEARTBEAT_ERROR(1005, "心跳监测失败"),
+
+    /**
+     * Dcs相关错误码2开头
+     */
+    E_DCS_ADD_STRATEGY_FAIL(2000, "并发数超过限制,请联系永中进行授权升级"),
+    E_DCS_REDUCE_STRATEGY_FAIL(2001, "移除Dcs实例节点时策略检查失败"),
     ;
 
 
