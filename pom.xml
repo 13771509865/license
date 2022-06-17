@@ -22,6 +22,9 @@
         <license.version>0.0.1-SNAPSHOT</license.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <springdoc.version>1.6.9</springdoc.version>
+        <guava.version>31.1-jre</guava.version>
+        <fastjson.version>2.0.7</fastjson.version>
+        <hutool.version>5.8.3</hutool.version>
     </properties>
 
     <modules>
@@ -49,6 +52,21 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -12,6 +12,10 @@ public enum ResultCodeEnum {
     E_INVALID_PARAM(3, "参数校验失败,请检查参数合法性"),
     E_SERVER_UNKNOWN_ERROR(4, "服务未知错误"),
 
+    E_INVALID_HEADER(5, "头信息验证失败"),
+
+    E_ILLEGAL_REQUEST(6, "非法请求"),
+
     E_STRATEGY_NULL(1000, "限制策略初始化失败"),
 
     E_REGISTER_FAIL(1001, "当前服务注册授权中心失败"),
@@ -23,6 +27,12 @@ public enum ResultCodeEnum {
     E_HEARTBEAT_INSTANCE_MATCH_FAIL(1004, "心跳监测异常,实例检查失败"),
 
     E_HEARTBEAT_ERROR(1005, "心跳监测失败"),
+
+    E_REGISTER_INSTANCE_MATCH_FAIL(1006, "服务注册异常,实例检查失败"),
+
+    E_HANDSHAKE_FAIL(1007, "握手失败"),
+
+    E_EXCHANGE_SECRET_DECRYPT_ERROR(1008, "exchange密钥无效,请检查加密"),
 
     /**
      * Dcs相关错误码2开头

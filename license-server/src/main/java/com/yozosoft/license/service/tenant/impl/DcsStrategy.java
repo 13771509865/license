@@ -2,6 +2,7 @@ package com.yozosoft.license.service.tenant.impl;
 
 import com.yozosoft.license.constant.MetaDataConstant;
 import com.yozosoft.license.model.Instance;
+import com.yozosoft.license.model.bo.BaseLicenseBO;
 import com.yozosoft.license.model.bo.DcsLicenseBO;
 import com.yozosoft.license.service.tenant.Strategy;
 
@@ -39,7 +40,8 @@ public class DcsStrategy implements Strategy {
         return dcsStrategy;
     }
 
-    public void setDcsLicenseBO(DcsLicenseBO dcsLicenseBO){
-        this.dcsLicenseBO = dcsLicenseBO;
+    @Override
+    public void setLicenseBO(BaseLicenseBO baseLicenseBO){
+        this.dcsLicenseBO = (DcsLicenseBO)baseLicenseBO;
     }
 }

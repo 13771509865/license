@@ -30,7 +30,7 @@ public class InstanceController {
         if (!heartBeatResult) {
             throw new LicenseException(ResultCodeEnum.E_HEARTBEAT_ERROR);
         }
-        return ResponseEntity.ok(heartBeatDTO.getInstanceId().toString());
+        return ResponseEntity.ok(System.currentTimeMillis());
     }
 
     @PostMapping("/register")

@@ -33,6 +33,12 @@ public class LicenseException extends RuntimeException{
         this.errorMessage = resultCodeEnum.getInfo();
     }
 
+    public LicenseException(ResultCodeEnum resultCodeEnum, HttpStatus httpStatus){
+        this.errorCode = resultCodeEnum.getValue();
+        this.errorMessage = resultCodeEnum.getInfo();
+        this.httpStatus = httpStatus;
+    }
+
     public LicenseException(Integer errorCode, String errorMessage, Object data, HttpStatus httpStatus){
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
