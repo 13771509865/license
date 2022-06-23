@@ -11,4 +11,6 @@ public class SysConstant {
     public static final Long BEAT_PROCESSOR_DELAY = 0L;
 
     public static final String CHARSET = "UTF-8";
+
+    public static final String LICENSE_FILE_NAME = "license.eni";
 }

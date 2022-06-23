@@ -44,4 +44,9 @@ public class DcsStrategy implements Strategy {
     public void setLicenseBO(BaseLicenseBO baseLicenseBO){
         this.dcsLicenseBO = (DcsLicenseBO)baseLicenseBO;
     }
+
+    @Override
+    public Object getClientResponse() {
+        return dcsLicenseBO.getAllowTypes();
+    }
 }

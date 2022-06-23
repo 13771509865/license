@@ -34,6 +34,8 @@ public enum ResultCodeEnum {
 
     E_EXCHANGE_SECRET_DECRYPT_ERROR(1008, "exchange密钥无效,请检查加密"),
 
+    E_RANDOM_RSA_SECRET_FAIL(1009, "随机生成密钥失败"),
+
     /**
      * Dcs相关错误码2开头
      */

@@ -28,9 +28,9 @@ public class InstanceService {
 
     private Strategy strategy;
 
-    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors()*2);
+    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    public InstanceService(String tenantName){
+    public InstanceService(String tenantName) {
         this.tenantName = tenantName;
     }
 
@@ -42,30 +42,30 @@ public class InstanceService {
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         scheduledExecutorService.shutdown();
     }
 
-    public void addInstance(Instance instance){
+    public void addInstance(Instance instance) {
         /**
          * 根据类型判断策略
          */
         Boolean checkResult = strategy.checkAddInstance(instances, instance);
-        if(!checkResult){
+        if (!checkResult) {
             throw new LicenseException(ResultCodeEnum.E_DCS_ADD_STRATEGY_FAIL);
         }
         instances.put(instance.getInstanceId(), instance);
     }
 
-    public void removeInstance(Instance instance){
+    public void removeInstance(Instance instance) {
         Boolean checkResult = strategy.checkReduceInstance(instances, instance);
-        if(!checkResult){
+        if (!checkResult) {
             throw new LicenseException(ResultCodeEnum.E_DCS_REDUCE_STRATEGY_FAIL);
         }
         instances.remove(instance.getInstanceId());
     }
 
-    public void processClientBeat(Long instanceId){
+    public void processClientBeat(Long instanceId) {
         ClientBeatProcessorTask clientBeatProcessorTask = new ClientBeatProcessorTask();
         clientBeatProcessorTask.setInstanceId(instanceId);
         clientBeatProcessorTask.setInstanceService(this);
@@ -73,12 +73,16 @@ public class InstanceService {
         GlobalExecutor.BEAT_PROCESSOR_EXECUTOR.schedule(clientBeatProcessorTask, SysConstant.BEAT_PROCESSOR_DELAY, TimeUnit.MILLISECONDS);
     }
 
-    public Map<Long, Instance> getInstances(){
+    public Map<Long, Instance> getInstances() {
         return instances;
     }
 
-    public Instance getInstance(Long instanceId){
+    public Instance getInstance(Long instanceId) {
         Instance instance = instances.get(instanceId);
         return instance;
+    }
+
+    public Object getLicenseInfo() {
+        return strategy.getClientResponse();
     }
 }

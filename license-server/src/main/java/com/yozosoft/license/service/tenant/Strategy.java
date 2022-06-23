@@ -12,4 +12,9 @@ public interface Strategy {
     Boolean checkReduceInstance(Map<Long, Instance> instances, Instance instance);
 
     void setLicenseBO(BaseLicenseBO baseLicenseBO);
+
+    /**
+     * 获取各应用注册需返回响应内容
+     */
+    Object getClientResponse();
 }

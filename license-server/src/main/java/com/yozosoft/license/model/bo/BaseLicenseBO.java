@@ -7,7 +7,9 @@ import java.util.Date;
 @Data
 public class BaseLicenseBO {
 
-    private Date startDate;
+    private Date startTime;
 
-    private Date expireDate;
+    private Date expireTime;
+
+    private Integer licenseType;
 }

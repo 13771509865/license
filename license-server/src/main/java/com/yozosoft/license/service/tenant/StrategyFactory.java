@@ -18,7 +18,7 @@ public class StrategyFactory {
             switch (tenant) {
                 case E_DCS:
                     strategy = DcsStrategy.getSingleton();
-                    DcsLicenseBO dcsLicenseBO = licensePropService.getDcsLicenseBO();
+                    DcsLicenseBO dcsLicenseBO = licensePropService.getSysLicenseBO().getDcsLicense();
                     strategy.setLicenseBO(dcsLicenseBO);
                     break;
                 default:

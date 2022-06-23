@@ -6,7 +6,6 @@ import com.yozosoft.license.model.HeartBeatDTO;
 import com.yozosoft.license.model.RegisterDTO;
 import com.yozosoft.license.service.heartbeat.HeartBeatService;
 import com.yozosoft.license.service.register.RegisterService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +34,7 @@ public class InstanceController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterDTO registerDTO) {
-        String register = registerService.register(registerDTO);
-        if (StringUtils.isBlank(register)) {
-            throw new LicenseException(ResultCodeEnum.E_REGISTER_FAIL);
-        }
+        Object register = registerService.register(registerDTO);
         return ResponseEntity.ok(register);
     }
 }
