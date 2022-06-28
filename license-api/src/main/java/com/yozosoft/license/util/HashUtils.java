@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class HashUtils {
 
-    public static String hmacSha1(String str, String secret){
+    public static String hmacSha1(String str, String secret) {
         String hmacSha1 = Hashing.hmacSha1(secret.getBytes(StandardCharsets.UTF_8)).hashString(str, StandardCharsets.UTF_8).toString();
         return hmacSha1;
     }

@@ -17,7 +17,8 @@ public class SnowflakeUtils {
 
     @PostConstruct
     public void init() {
-        workerId = getWorkerId();
+        Long workerIdTemp = getWorkerId();
+        workerId = workerIdTemp % 32;
         snowflake = new Snowflake(workerId);
     }
 

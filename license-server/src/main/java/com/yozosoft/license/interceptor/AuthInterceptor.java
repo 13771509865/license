@@ -51,10 +51,4 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         return true;
     }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        //TODO 保证回传加密防止伪造server服务响应
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-    }
 }
