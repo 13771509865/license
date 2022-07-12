@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class LicenseConfig {
 
-    @Value("license.channel.publicKey")
+    @Value("${license.channel.publicKey}")
     private String channelPubKey;
 
-    @Value("license.channel.privateKey")
+    @Value("${license.channel.privateKey}")
     private String channelPriKey;
 
-    @Value("license.eni.publicKey")
+    @Value("${license.eni.publicKey}")
     private String eniPubKey;
 }

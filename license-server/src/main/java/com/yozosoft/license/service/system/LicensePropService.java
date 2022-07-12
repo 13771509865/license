@@ -46,20 +46,23 @@ public class LicensePropService implements ApplicationRunner {
             System.out.println("授权文件不存在,授权中心启动失败");
             System.exit(0);
         }
+        //初始化获取授权eni文件内容,根据文件类型初始化各应用LicenseBO
+        try {
+            sysLicenseBO = eniService.parseEni(licenseFile);
+            if(sysLicenseBO == null){
+                throw new RuntimeException();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("解析授权文件失败,请检查授权文件");
+            System.exit(0);
+        }
         try {
             //确保单台服务器只有一个license实例节点
             checkUnique(licenseFile);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("初始化授权中心服务失败,唯一性约束检查失败");
-            System.exit(0);
-        }
-        //初始化获取授权eni文件内容,根据文件类型初始化各应用LicenseBO
-        try {
-            sysLicenseBO = eniService.parseEni(licenseFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("解析授权文件失败,请检查授权文件");
             System.exit(0);
         }
     }

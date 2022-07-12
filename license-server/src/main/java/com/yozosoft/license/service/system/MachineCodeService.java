@@ -12,6 +12,17 @@ import java.util.Enumeration;
 public class MachineCodeService {
     private String machineCode;
 
+    public static void main(String[] args) {
+        MachineCodeService machineCodeService = new MachineCodeService();
+        String featureCode = machineCodeService.getFeatureCode();
+        System.out.println(featureCode);
+
+        String s = machineCodeService.decryptMachineCode("bWFjPTAwRkYxMDZGNkYyRSZpcD0yMC4xLjEuODImY3B1aWQ9QkZFQkZCRkYwMDA4MDZFQw==");
+        String s1 = machineCodeService.decryptMachineCode("bWFjPTAwRkYxMDZGNkYyRSZpcD0yMC4xLjEuNjkmY3B1aWQ9QkZFQkZCRkYwMDA4MDZFQw==");
+        System.out.println(s);
+        System.out.println(s1);
+    }
+
     public String getFeatureCode() {
         return encryptStr(getMachineCode());
     }
@@ -61,11 +72,11 @@ public class MachineCodeService {
             if (mac != null) {
                 machineCode = "mac=".concat(mac);
             }
-            String ip = getRealIp();
-            if (ip != null) {
-                ip = "ip=".concat(ip);
-                machineCode = machineCode.concat("&").concat(ip);
-            }
+//            String ip = getRealIp();
+//            if (ip != null) {
+//                ip = "ip=".concat(ip);
+//                machineCode = machineCode.concat("&").concat(ip);
+//            }
             String cpu = getCPUSerial();
             if (cpu != null) {
                 cpu = "cpuid=".concat(cpu);
