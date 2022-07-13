@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author zhouf
  */
-@ControllerAdvice(basePackageClasses = {InstanceController.class})
+@ControllerAdvice(assignableTypes  = {InstanceController.class})
 public class EncryptResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Autowired
