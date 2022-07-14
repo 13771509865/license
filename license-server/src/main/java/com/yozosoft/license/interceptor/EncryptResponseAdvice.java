@@ -1,5 +1,6 @@
 package com.yozosoft.license.interceptor;
 
+import com.alibaba.fastjson2.JSON;
 import com.yozosoft.license.service.security.SecurityService;
 import com.yozosoft.license.util.AESUtils;
 import com.yozosoft.license.web.InstanceController;
@@ -38,6 +39,6 @@ public class EncryptResponseAdvice implements ResponseBodyAdvice<Object> {
         String uuid = uuids.get(0);
         String uuidSecret = securityService.getUuidSecret(uuid);
         String encryptBody = AESUtils.encrypt(body, uuidSecret);
-        return encryptBody;
+        return JSON.parse(encryptBody);
     }
 }
