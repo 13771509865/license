@@ -17,7 +17,7 @@ public class RegisterServiceImpl implements RegisterService {
     InstanceManager instanceManager;
 
     @Override
-    public Object register(RegisterDTO registerDTO) {
+    public String register(RegisterDTO registerDTO) {
         String tenantName = registerDTO.getTenantName();
         String nameSpace = registerDTO.getNameSpace();
         Instance instance = registerDTO.getInstance();
@@ -26,7 +26,7 @@ public class RegisterServiceImpl implements RegisterService {
         Instance innerInstance = instanceService.getInstance(instance.getInstanceId());
         checkExistInstance(innerInstance, instance.getIp(), instance.getPort());
         instanceService.addInstance(instance);
-        Object licenseInfo = instanceService.getLicenseInfo();
+        String licenseInfo = instanceService.getLicenseInfo();
         return licenseInfo;
     }
 

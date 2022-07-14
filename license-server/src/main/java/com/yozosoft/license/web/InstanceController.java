@@ -34,7 +34,7 @@ public class InstanceController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterDTO registerDTO) {
-        Object register = registerService.register(registerDTO);
+        String register = registerService.register(registerDTO);
         return ResponseEntity.ok(register);
     }
 }

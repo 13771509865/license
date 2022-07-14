@@ -4,5 +4,5 @@ import com.yozosoft.license.model.RegisterDTO;
 
 public interface RegisterService {
 
-    Object register(RegisterDTO registerDTO);
+    String register(RegisterDTO registerDTO);
 }

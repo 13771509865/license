@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author zhouf
  */
-@ControllerAdvice(assignableTypes  = {InstanceController.class})
+@ControllerAdvice(assignableTypes = {InstanceController.class})
 public class EncryptResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Autowired
@@ -39,6 +39,6 @@ public class EncryptResponseAdvice implements ResponseBodyAdvice<Object> {
         String uuid = uuids.get(0);
         String uuidSecret = securityService.getUuidSecret(uuid);
         String encryptBody = AESUtils.encrypt(body, uuidSecret);
-        return JSON.parse(encryptBody);
+        return encryptBody;
     }
 }

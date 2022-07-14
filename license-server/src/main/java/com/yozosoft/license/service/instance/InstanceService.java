@@ -1,5 +1,6 @@
 package com.yozosoft.license.service.instance;
 
+import com.alibaba.fastjson2.JSON;
 import com.yozosoft.license.common.constant.SysConstant;
 import com.yozosoft.license.common.util.GlobalExecutor;
 import com.yozosoft.license.constant.ResultCodeEnum;
@@ -81,7 +82,7 @@ public class InstanceService {
         return instance;
     }
 
-    public Object getLicenseInfo() {
-        return strategy.getClientResponse();
+    public String getLicenseInfo() {
+        return JSON.toJSONString(strategy.getClientResponse());
     }
 }

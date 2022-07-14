@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class AESUtils {
 
     public static String encrypt(Object obj, String secret) {
-        return getAes(secret).encryptHex(JSON.toJSONString(obj), StandardCharsets.UTF_8);
+        return getAes(secret).encryptHex(obj.toString(), StandardCharsets.UTF_8);
     }
 
     public static String decrypt(String str, String secret) {
