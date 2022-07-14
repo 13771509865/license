@@ -22,6 +22,7 @@ public class InstanceService {
 
     private ClientBeatCheckTask clientBeatCheckTask = new ClientBeatCheckTask(this);
 
+    //TODO 需要持久化
     private Map<Long, Instance> instances = new ConcurrentHashMap<>();
 
     private String tenantName;

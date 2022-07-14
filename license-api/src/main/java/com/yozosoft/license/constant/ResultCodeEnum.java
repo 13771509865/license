@@ -41,6 +41,11 @@ public enum ResultCodeEnum {
      */
     E_DCS_ADD_STRATEGY_FAIL(2000, "并发数超过限制,请联系永中进行授权升级"),
     E_DCS_REDUCE_STRATEGY_FAIL(2001, "移除Dcs实例节点时策略检查失败"),
+
+    /**
+     * client调用错误9开头
+     */
+    E_CLIENT_HTTP_FAIL(9000, "客户端http调用通信失败"),
     ;
 
 
