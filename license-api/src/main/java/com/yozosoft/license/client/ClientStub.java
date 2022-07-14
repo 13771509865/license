@@ -4,6 +4,7 @@ import com.yozosoft.license.exception.ClientException;
 import com.yozosoft.license.model.HandshakeResultDTO;
 import com.yozosoft.license.model.HeartBeatDTO;
 import com.yozosoft.license.model.RegisterDTO;
+import com.yozosoft.license.model.SecretDTO;
 
 /**
  * 客户端调用凭证
@@ -16,6 +17,8 @@ public interface ClientStub {
 
     Object clientBeat(String serverHost, HeartBeatDTO heartBeatDTO, String secret, Long uuid) throws ClientException;
 
-    HandshakeResultDTO clientHandshake()throws ClientException;
+    HandshakeResultDTO clientHandshake(String serverHost) throws ClientException;
+
+    void clientExchangeSecret(String serverHost, SecretDTO secretDTO) throws ClientException;
 
 }

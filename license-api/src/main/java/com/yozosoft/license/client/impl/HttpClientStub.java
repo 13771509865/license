@@ -8,10 +8,7 @@ import com.alibaba.fastjson.parser.Feature;
 import com.yozosoft.license.client.ClientStub;
 import com.yozosoft.license.constant.ResultCodeEnum;
 import com.yozosoft.license.exception.ClientException;
-import com.yozosoft.license.model.ErrorResultDTO;
-import com.yozosoft.license.model.HandshakeResultDTO;
-import com.yozosoft.license.model.HeartBeatDTO;
-import com.yozosoft.license.model.RegisterDTO;
+import com.yozosoft.license.model.*;
 import com.yozosoft.license.util.XAuthUtils;
 
 import java.text.SimpleDateFormat;
@@ -24,21 +21,25 @@ import java.util.*;
  */
 public class HttpClientStub implements ClientStub {
 
-    private static final String registerUri = "/api/v1/instance/register";
+    private static final String REGISTER_URI = "/api/v1/instance/register";
 
-    private static final String beatUri = "/api/v1/instance/beat";
+    private static final String BEAT_URI = "/api/v1/instance/beat";
+
+    private static final String HANDSHAKE_URI = "/api/v1/security/handshake";
+
+    private static final String EXCHANGE_SECRET_URI = "/api/v1/security/secret";
 
     @Override
     public Object clientRegister(String serverHost, RegisterDTO registerDTO, String secret, Long uuid) throws ClientException {
-        HttpResponse response = HttpRequest.post(serverHost + registerUri).body(JSON.toJSONString(registerDTO))
+        HttpResponse response = HttpRequest.post(serverHost + REGISTER_URI).body(JSON.toJSONString(registerDTO))
                 .header(buildHeaders(registerDTO, uuid, secret)).timeout(100 * 1000).execute();
         String body = response.body();
-        if (response.isOk()) {
-            Object result = JSON.parse(body);
-            return result;
-        }
         ErrorResultDTO errorResultDTO = null;
         try {
+            if (response.isOk()) {
+                Object result = JSON.parse(body);
+                return result;
+            }
             errorResultDTO = JSON.parseObject(body, ErrorResultDTO.class);
         } catch (Exception e) {
             throw new ClientException(ResultCodeEnum.E_CLIENT_HTTP_FAIL.getValue(), ResultCodeEnum.E_CLIENT_HTTP_FAIL.getInfo());
@@ -48,15 +49,15 @@ public class HttpClientStub implements ClientStub {
 
     @Override
     public Object clientBeat(String serverHost, HeartBeatDTO heartBeatDTO, String secret, Long uuid) throws ClientException {
-        HttpResponse response = HttpRequest.put(serverHost + beatUri).body(JSON.toJSONString(heartBeatDTO))
+        HttpResponse response = HttpRequest.put(serverHost + BEAT_URI).body(JSON.toJSONString(heartBeatDTO))
                 .header(buildHeaders(heartBeatDTO, uuid, secret)).timeout(100 * 1000).execute();
         String body = response.body();
-        if (response.isOk()) {
-            Object result = JSON.parse(body);
-            return result;
-        }
         ErrorResultDTO errorResultDTO = null;
         try {
+            if (response.isOk()) {
+                Object result = JSON.parse(body);
+                return result;
+            }
             errorResultDTO = JSON.parseObject(body, ErrorResultDTO.class);
         } catch (Exception e) {
             throw new ClientException(ResultCodeEnum.E_CLIENT_HTTP_FAIL.getValue(), ResultCodeEnum.E_CLIENT_HTTP_FAIL.getInfo());
@@ -65,8 +66,35 @@ public class HttpClientStub implements ClientStub {
     }
 
     @Override
-    public HandshakeResultDTO clientHandshake() throws ClientException {
-        return null;
+    public HandshakeResultDTO clientHandshake(String serverHost) throws ClientException {
+        HttpResponse response = HttpRequest.get(serverHost + HANDSHAKE_URI).timeout(100 * 1000).execute();
+        String body = response.body();
+        ErrorResultDTO errorResultDTO = null;
+        try {
+            if (response.isOk()) {
+                HandshakeResultDTO handshakeResultDTO = JSON.parseObject(body, HandshakeResultDTO.class);
+                return handshakeResultDTO;
+            }
+            errorResultDTO = JSON.parseObject(body, ErrorResultDTO.class);
+        } catch (Exception e) {
+            throw new ClientException(ResultCodeEnum.E_CLIENT_HTTP_FAIL.getValue(), ResultCodeEnum.E_CLIENT_HTTP_FAIL.getInfo());
+        }
+        throw new ClientException(errorResultDTO.getErrorCode(), errorResultDTO.getErrorMessage());
+    }
+
+    @Override
+    public void clientExchangeSecret(String serverHost, SecretDTO secretDTO) throws ClientException {
+        HttpResponse response = HttpRequest.post(serverHost + EXCHANGE_SECRET_URI).timeout(100 * 1000).execute();
+        String body = response.body();
+        ErrorResultDTO errorResultDTO = null;
+        try {
+            if (!response.isOk()) {
+                errorResultDTO = JSON.parseObject(body, ErrorResultDTO.class);
+                throw new ClientException(errorResultDTO.getErrorCode(), errorResultDTO.getErrorMessage());
+            }
+        } catch (Exception e) {
+            throw new ClientException(ResultCodeEnum.E_CLIENT_HTTP_FAIL.getValue(), ResultCodeEnum.E_CLIENT_HTTP_FAIL.getInfo());
+        }
     }
 
     private static Map<String, List<String>> buildHeaders(Object obj, Long uuid, String secret) {
