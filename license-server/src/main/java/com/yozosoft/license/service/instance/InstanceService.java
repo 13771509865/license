@@ -10,8 +10,6 @@ import com.yozosoft.license.service.heartbeat.ClientBeatProcessorTask;
 import com.yozosoft.license.service.tenant.Strategy;
 import com.yozosoft.license.service.tenant.StrategyFactory;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -33,16 +31,16 @@ public class InstanceService {
 
     public InstanceService(String tenantName) {
         this.tenantName = tenantName;
+        init();
     }
 
-    @PostConstruct
     public void init() {
         strategy = StrategyFactory.getStrategy(tenantName);
         //开启定时任务检查当前集群健康状态
         scheduledExecutorService.scheduleWithFixedDelay(clientBeatCheckTask, SysConstant.HEALTH_INITIAL_DELAY, SysConstant.HEALTH_DELAY, TimeUnit.MILLISECONDS);
     }
 
-    @PreDestroy
+    //TODO 销毁未实现
     public void destroy() {
         scheduledExecutorService.shutdown();
     }

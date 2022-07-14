@@ -13,5 +13,8 @@ public class InstanceHealth {
 
     private Long beatTimeOut;
 
+    /**
+     * 客户端心跳间隔,单位毫秒,不允许小于30s
+     */
     private Long beatPeriod;
 }
