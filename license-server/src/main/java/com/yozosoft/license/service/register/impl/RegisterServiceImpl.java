@@ -57,21 +57,21 @@ public class RegisterServiceImpl implements RegisterService {
      * 注销
      */
     @Override
-    public String cancel(CancelDTO cancelDTO) {
+    public Boolean cancel(CancelDTO cancelDTO) {
         InstanceService instanceService = instanceManager.getInstanceService(cancelDTO.getTenantName(), cancelDTO.getNameSpace());
         Instance instance = instanceService.getInstance(cancelDTO.getInstanceId());
         if (instance != null) {
             String ip = instance.getIp();
             Integer port = instance.getPort();
-            String beatIp = cancelDTO.getIp();
-            Integer beatPort = cancelDTO.getPort();
-            if (ip.equals(beatIp) && port.equals(beatPort)) {
+            String cancelIp = cancelDTO.getIp();
+            Integer cancelPort = cancelDTO.getPort();
+            if (ip.equals(cancelIp) && port.equals(cancelPort)) {
                 instanceService.removeInstance(instance);
             } else {
                 throw new LicenseException(ResultCodeEnum.E_CANCEL_INSTANCE_MATCH_FAIL);
             }
         }
-        return instanceService.getLicenseInfo();
+        return true;
     }
 
 }

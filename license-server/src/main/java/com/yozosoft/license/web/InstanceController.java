@@ -42,10 +42,13 @@ public class InstanceController {
     /**
      * 注销
      */
-    @PostMapping("/cancel")
+    @DeleteMapping("/cancel")
     public ResponseEntity cancel(@RequestBody CancelDTO cancelDTO) {
-        String cancel = registerService.cancel(cancelDTO);
-        return ResponseEntity.ok(cancel);
+        Boolean cancel = registerService.cancel(cancelDTO);
+        if(!cancel){
+            throw new LicenseException(ResultCodeEnum.E_CANCEL_ERROR);
+        }
+        return ResponseEntity.ok(System.currentTimeMillis());
     }
 
 

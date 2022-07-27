@@ -52,6 +52,7 @@ public class InstanceService {
          */
         Boolean checkResult = strategy.checkAddInstance(instances, instance);
         if (!checkResult) {
+            //TODO 报错信息不对
             throw new LicenseException(ResultCodeEnum.E_DCS_ADD_STRATEGY_FAIL);
         }
         instances.put(instance.getInstanceId(), instance);
@@ -60,6 +61,7 @@ public class InstanceService {
     public void removeInstance(Instance instance) {
         Boolean checkResult = strategy.checkReduceInstance(instances, instance);
         if (!checkResult) {
+            //TODO 报错信息不对
             throw new LicenseException(ResultCodeEnum.E_DCS_REDUCE_STRATEGY_FAIL);
         }
         instances.remove(instance.getInstanceId());

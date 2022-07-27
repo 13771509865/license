@@ -10,5 +10,5 @@ public interface RegisterService {
     /**
      * 注销
      */
-    String cancel(CancelDTO cancelDTO);
+    Boolean cancel(CancelDTO cancelDTO);
 }
