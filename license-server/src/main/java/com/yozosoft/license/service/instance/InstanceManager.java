@@ -14,17 +14,30 @@ public class InstanceManager {
     private Map<String, InstanceService> instanceServices = new ConcurrentHashMap<>();
 
     public InstanceService getIfAbsentInStanceService(String tenantName, String nameSpace) {
-        String instanceKey = tenantName + SysConstant.SEPARATOR + nameSpace;
+        String instanceKey = getInstanceKey(tenantName, nameSpace);
         InstanceService instanceService = instanceServices.computeIfAbsent(instanceKey, key -> new InstanceService(tenantName));
         return instanceService;
     }
 
     public InstanceService getInstanceService(String tenantName, String nameSpace){
-        String instanceKey = tenantName + SysConstant.SEPARATOR + nameSpace;
+        String instanceKey = getInstanceKey(tenantName, nameSpace);
         InstanceService instanceService = instanceServices.get(instanceKey);
         if(instanceService == null){
             throw new LicenseException(ResultCodeEnum.E_INSTANCE_SERVICE_NOT_EXIST);
         }
         return instanceService;
+    }
+
+    public InstanceService removeInstanceService(String tenantName, String nameSpace){
+        String instanceKey = getInstanceKey(tenantName, nameSpace);
+        InstanceService instanceService = instanceServices.remove(instanceKey);
+        if(instanceService == null){
+            throw new LicenseException(ResultCodeEnum.E_INSTANCE_SERVICE_NOT_EXIST);
+        }
+        return instanceService;
+    }
+
+    private String getInstanceKey(String tenantName, String nameSpace) {
+        return tenantName + SysConstant.SEPARATOR + nameSpace;
     }
 }

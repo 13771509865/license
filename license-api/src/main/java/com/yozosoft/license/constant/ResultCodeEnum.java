@@ -36,6 +36,7 @@ public enum ResultCodeEnum {
 
     E_RANDOM_RSA_SECRET_FAIL(1009, "随机生成密钥失败"),
 
+    E_CANCEL_INSTANCE_MATCH_FAIL(1014, "注销instance异常,实例检查失败"),
     /**
      * Dcs相关错误码2开头
      */

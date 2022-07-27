@@ -2,6 +2,7 @@ package com.yozosoft.license.web;
 
 import com.yozosoft.license.constant.ResultCodeEnum;
 import com.yozosoft.license.exception.LicenseException;
+import com.yozosoft.license.model.CancelDTO;
 import com.yozosoft.license.model.HeartBeatDTO;
 import com.yozosoft.license.model.RegisterDTO;
 import com.yozosoft.license.service.heartbeat.HeartBeatService;
@@ -37,4 +38,15 @@ public class InstanceController {
         String register = registerService.register(registerDTO);
         return ResponseEntity.ok(register);
     }
+
+    /**
+     * 注销
+     */
+    @PostMapping("/cancel")
+    public ResponseEntity cancel(@RequestBody CancelDTO cancelDTO) {
+        String cancel = registerService.cancel(cancelDTO);
+        return ResponseEntity.ok(cancel);
+    }
+
+
 }

@@ -23,6 +23,8 @@ public class HttpClientStub implements ClientStub {
 
     private static final String REGISTER_URI = "/api/v1/instance/register";
 
+    private static final String CANCEL_URI = "/api/v1/instance/cancel";
+
     private static final String BEAT_URI = "/api/v1/instance/beat";
 
     private static final String HANDSHAKE_URI = "/api/v1/security/handshake";
@@ -96,6 +98,27 @@ public class HttpClientStub implements ClientStub {
             throw new ClientException(ResultCodeEnum.E_CLIENT_HTTP_FAIL.getValue(), ResultCodeEnum.E_CLIENT_HTTP_FAIL.getInfo());
         }
     }
+
+    @Override
+    public Object clientCancel(String serverHost, CancelDTO cancelDTO, String secret, Long uuid) throws ClientException {
+        HttpResponse response = HttpRequest.post(serverHost + CANCEL_URI).body(JSON.toJSONString(cancelDTO))
+                .header(buildHeaders(cancelDTO, uuid, secret)).timeout(100 * 1000).execute();
+        String body = response.body();
+        ErrorResultDTO errorResultDTO = null;
+        try {
+            if (response.isOk()) {
+                Object result = JSON.parse(body);
+                return result;
+            }
+            errorResultDTO = JSON.parseObject(body, ErrorResultDTO.class);
+        } catch (Exception e) {
+            throw new ClientException(ResultCodeEnum.E_CLIENT_HTTP_FAIL.getValue(), ResultCodeEnum.E_CLIENT_HTTP_FAIL.getInfo());
+        }
+        throw new ClientException(errorResultDTO.getErrorCode(), errorResultDTO.getErrorMessage());
+    }
+
+
+
 
     private static Map<String, List<String>> buildHeaders(Object obj, Long uuid, String secret) {
         Map<String, List<String>> headers = new HashMap<>(10);

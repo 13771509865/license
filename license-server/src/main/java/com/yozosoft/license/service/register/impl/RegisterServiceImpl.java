@@ -2,6 +2,7 @@ package com.yozosoft.license.service.register.impl;
 
 import com.yozosoft.license.constant.ResultCodeEnum;
 import com.yozosoft.license.exception.LicenseException;
+import com.yozosoft.license.model.CancelDTO;
 import com.yozosoft.license.model.Instance;
 import com.yozosoft.license.model.RegisterDTO;
 import com.yozosoft.license.service.instance.InstanceManager;
@@ -51,4 +52,26 @@ public class RegisterServiceImpl implements RegisterService {
         //目前写死了超时时间为心跳间隔的10倍
         instance.setBeatTimeOut(instance.getBeatPeriod() * 10);
     }
+
+    /**
+     * 注销
+     */
+    @Override
+    public String cancel(CancelDTO cancelDTO) {
+        InstanceService instanceService = instanceManager.getInstanceService(cancelDTO.getTenantName(), cancelDTO.getNameSpace());
+        Instance instance = instanceService.getInstance(cancelDTO.getInstanceId());
+        if (instance != null) {
+            String ip = instance.getIp();
+            Integer port = instance.getPort();
+            String beatIp = cancelDTO.getIp();
+            Integer beatPort = cancelDTO.getPort();
+            if (ip.equals(beatIp) && port.equals(beatPort)) {
+                instanceService.removeInstance(instance);
+            } else {
+                throw new LicenseException(ResultCodeEnum.E_CANCEL_INSTANCE_MATCH_FAIL);
+            }
+        }
+        return instanceService.getLicenseInfo();
+    }
+
 }

@@ -1,10 +1,7 @@
 package com.yozosoft.license.client;
 
 import com.yozosoft.license.exception.ClientException;
-import com.yozosoft.license.model.HandshakeResultDTO;
-import com.yozosoft.license.model.HeartBeatDTO;
-import com.yozosoft.license.model.RegisterDTO;
-import com.yozosoft.license.model.SecretDTO;
+import com.yozosoft.license.model.*;
 
 /**
  * 客户端调用凭证
@@ -21,4 +18,8 @@ public interface ClientStub {
 
     void clientExchangeSecret(String serverHost, SecretDTO secretDTO) throws ClientException;
 
+    /**
+     * 注销
+     */
+    Object clientCancel(String serverHost, CancelDTO cancelDTO, String secret, Long uuid) throws ClientException;
 }
