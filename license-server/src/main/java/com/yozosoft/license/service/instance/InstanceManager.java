@@ -1,6 +1,7 @@
 package com.yozosoft.license.service.instance;
 
 import com.yozosoft.license.common.constant.SysConstant;
+import com.yozosoft.license.common.util.SpringUtils;
 import com.yozosoft.license.constant.ResultCodeEnum;
 import com.yozosoft.license.exception.LicenseException;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class InstanceManager {
 
     public InstanceService getIfAbsentInStanceService(String tenantName, String nameSpace) {
         String instanceKey = getInstanceKey(tenantName, nameSpace);
-        InstanceService instanceService = instanceServiceMap.computeIfAbsent(instanceKey, key -> new InstanceService(tenantName, nameSpace));
+        InstanceService instanceService = instanceServiceMap.computeIfAbsent(instanceKey, key -> SpringUtils.getBean(InstanceService.class, tenantName, nameSpace));
         return instanceService;
     }
 

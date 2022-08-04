@@ -5,25 +5,32 @@ import com.yozosoft.license.constant.MetaDataConstant;
 import com.yozosoft.license.constant.ResultCodeEnum;
 import com.yozosoft.license.exception.LicenseException;
 import com.yozosoft.license.model.Instance;
-import com.yozosoft.license.model.bo.BaseLicenseBO;
 import com.yozosoft.license.model.bo.DcsLicenseBO;
+import com.yozosoft.license.service.system.LicensePropService;
 import com.yozosoft.license.service.tenant.Strategy;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.concurrent.atomic.LongAdder;
 
+@Component("dcsStrategy")
 public class DcsStrategy implements Strategy {
 
-    private DcsLicenseBO dcsLicenseBO;
+//    private DcsLicenseBO dcsLicenseBO;
 
-    private static DcsStrategy dcsStrategy = new DcsStrategy();
+    @Autowired
+    private LicensePropService licensePropService;
 
-    private RedisTemplate<String, Integer> redisTemplate;
+//    private static DcsStrategy dcsStrategy = new DcsStrategy();
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public Boolean checkAddInstance(Instance instance) {
+        DcsLicenseBO dcsLicenseBO = licensePropService.getSysLicenseBO().getDcsLicense();
+
         Map<String, String> metadata = instance.getMetadata();
         if (metadata == null || metadata.get(MetaDataConstant.CONCURRENCY_NUM) == null) {
             throw new LicenseException(ResultCodeEnum.E_INVALID_PARAM);
@@ -32,7 +39,7 @@ public class DcsStrategy implements Strategy {
         Long concurrencyNum = Long.valueOf(metadata.get(MetaDataConstant.CONCURRENCY_NUM));
 
         //获取当前已有并发数
-        Integer onlineConcurrencyNum = redisTemplate.opsForValue().get(SysConstant.ONLINE_CONCURRENCY_NUM);
+        Integer onlineConcurrencyNum = (Integer) redisTemplate.opsForValue().get(SysConstant.ONLINE_CONCURRENCY_NUM);
         if (onlineConcurrencyNum == null) {
             onlineConcurrencyNum = 0;
         }
@@ -57,21 +64,14 @@ public class DcsStrategy implements Strategy {
         return true;
     }
 
-    public static DcsStrategy getSingleton() {
-        return dcsStrategy;
-    }
+//    public static DcsStrategy getSingleton() {
+//        return dcsStrategy;
+//    }
 
-    @Override
-    public void setLicenseBO(BaseLicenseBO baseLicenseBO){
-        this.dcsLicenseBO = (DcsLicenseBO)baseLicenseBO;
-    }
 
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 
     @Override
     public Object getClientResponse() {
-        return dcsLicenseBO.getAllowTypes();
+        return licensePropService.getSysLicenseBO().getDcsLicense().getAllowTypes();
     }
 }

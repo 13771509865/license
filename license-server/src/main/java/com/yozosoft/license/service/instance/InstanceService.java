@@ -2,13 +2,22 @@ package com.yozosoft.license.service.instance;
 
 import com.alibaba.fastjson2.JSON;
 import com.yozosoft.license.common.util.SpringUtils;
+import com.yozosoft.license.constant.ResultCodeEnum;
+import com.yozosoft.license.constant.TenantEnum;
+import com.yozosoft.license.exception.LicenseException;
 import com.yozosoft.license.model.Instance;
 import com.yozosoft.license.service.security.SecretService;
 import com.yozosoft.license.service.tenant.Strategy;
-import com.yozosoft.license.service.tenant.StrategyFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 @Slf4j
+@Service
+@Scope("prototype")
 public class InstanceService {
     private String tenantName;
 
@@ -16,25 +25,27 @@ public class InstanceService {
 
     private Strategy strategy;
 
+    @Autowired
     private InstanceHandler instanceHandler;
-
+    @Autowired
     private SecretService secretService;
 
 
     public InstanceService(String tenantName, String nameSpace) {
-
         this.tenantName = tenantName;
         this.nameSpace = nameSpace;
-        init();
     }
 
+    @PostConstruct
     public void init() {
         /**
          * 根据类型判断策略
          */
-        strategy = StrategyFactory.getStrategy(tenantName);
-        instanceHandler = SpringUtils.getBean(InstanceHandler.class);
-        secretService=SpringUtils.getBean(SecretService.class);
+        TenantEnum tenantEnum = TenantEnum.getTenantByName(tenantName);
+        if (tenantEnum == null) {
+            throw new LicenseException(ResultCodeEnum.E_STRATEGY_NULL);
+        }
+        strategy = (Strategy) SpringUtils.getBean(tenantEnum.getTenantName() + Strategy.class.getSimpleName());
     }
 
     //TODO 销毁未实现
