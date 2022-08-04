@@ -5,6 +5,7 @@ import com.yozosoft.license.constant.ResultCodeEnum;
 import com.yozosoft.license.exception.LicenseException;
 import com.yozosoft.license.model.HandshakeResultDTO;
 import com.yozosoft.license.model.SecretDTO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +24,13 @@ public class SecurityService {
     SecretService secretService;
 
     public String getUuidSecret(String uuid) {
-        try {
-            Long uuidL = Long.valueOf(uuid);
-            String secret = secretService.getSecretByUuid(uuidL);
-            return secret;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+
+        Long uuidL = Long.valueOf(uuid);
+        String secret = secretService.getSecretByUuid(uuidL);
+        if (StringUtils.isBlank(secret)) {
+            throw new LicenseException(ResultCodeEnum.E_SECRET_NOT_EXIST);
         }
+        return secret;
     }
 
     public HandshakeResultDTO handshake() {

@@ -9,12 +9,12 @@ public class InstanceHealth {
 
     private Long registerMillis;
 
-    private Boolean healthy;
-
-    private Long beatTimeOut;
-
-    /**
-     * 客户端心跳间隔,单位毫秒,不允许小于30s
-     */
-    private Long beatPeriod;
+//    private Boolean healthy;
+//
+//    private Long beatTimeOut;
+//
+//    /**
+//     * 客户端心跳间隔,单位毫秒,不允许小于30s
+//     */
+//    private Long beatPeriod;
 }

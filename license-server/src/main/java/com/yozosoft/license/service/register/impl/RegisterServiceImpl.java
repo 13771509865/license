@@ -25,20 +25,12 @@ public class RegisterServiceImpl implements RegisterService {
         checkInstanceAndHealth(instance);
         InstanceService instanceService = instanceManager.getIfAbsentInStanceService(tenantName, nameSpace);
         Instance innerInstance = instanceService.getInstance(instance.getInstanceId());
-        checkExistInstance(innerInstance, instance.getIp(), instance.getPort());
+        if (innerInstance != null) {
+            throw new LicenseException(ResultCodeEnum.E_REGISTER_INSTANCE_ALREADY_EXIST);
+        }
         instanceService.addInstance(instance);
         String licenseInfo = instanceService.getLicenseInfo();
         return licenseInfo;
-    }
-
-    private void checkExistInstance(Instance instance, String ip, Integer port) {
-        if (instance != null) {
-            String instanceIp = instance.getIp();
-            Integer instancePort = instance.getPort();
-            if (!instanceIp.equals(ip) || !instancePort.equals(port)) {
-                throw new LicenseException(ResultCodeEnum.E_REGISTER_INSTANCE_MATCH_FAIL);
-            }
-        }
     }
 
     /**
@@ -47,10 +39,10 @@ public class RegisterServiceImpl implements RegisterService {
     private void checkInstanceAndHealth(Instance instance) {
         long nowMillis = System.currentTimeMillis();
         instance.setRegisterMillis(nowMillis);
-        instance.setHealthy(true);
+//        instance.setHealthy(true);
         instance.setLastBeatMillis(nowMillis);
         //目前写死了超时时间为心跳间隔的10倍
-        instance.setBeatTimeOut(instance.getBeatPeriod() * 10);
+//        instance.setBeatTimeOut(instance.getBeatPeriod() * 10);
     }
 
     /**
@@ -58,7 +50,7 @@ public class RegisterServiceImpl implements RegisterService {
      */
     @Override
     public Boolean cancel(CancelDTO cancelDTO) {
-        InstanceService instanceService = instanceManager.getInstanceService(cancelDTO.getTenantName(), cancelDTO.getNameSpace());
+        InstanceService instanceService = instanceManager.getIfAbsentInStanceService(cancelDTO.getTenantName(), cancelDTO.getNameSpace());
         Instance instance = instanceService.getInstance(cancelDTO.getInstanceId());
         if (instance != null) {
             String ip = instance.getIp();
@@ -71,6 +63,7 @@ public class RegisterServiceImpl implements RegisterService {
                 throw new LicenseException(ResultCodeEnum.E_CANCEL_INSTANCE_MATCH_FAIL);
             }
         }
+        //instance 为null时 已经请求过cancel 或者已超时被剔除
         return true;
     }
 

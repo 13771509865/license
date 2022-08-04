@@ -7,6 +7,7 @@ import com.yozosoft.license.exception.LicenseException;
 import com.yozosoft.license.model.bo.DcsLicenseBO;
 import com.yozosoft.license.service.system.LicensePropService;
 import com.yozosoft.license.service.tenant.impl.DcsStrategy;
+import org.springframework.data.redis.core.RedisTemplate;
 
 public class StrategyFactory {
 
@@ -17,9 +18,11 @@ public class StrategyFactory {
         if (tenant != null) {
             switch (tenant) {
                 case E_DCS:
-                    strategy = DcsStrategy.getSingleton();
+                    DcsStrategy dcsStrategy = DcsStrategy.getSingleton();
                     DcsLicenseBO dcsLicenseBO = licensePropService.getSysLicenseBO().getDcsLicense();
-                    strategy.setLicenseBO(dcsLicenseBO);
+                    dcsStrategy.setLicenseBO(dcsLicenseBO);
+                    dcsStrategy.setRedisTemplate((RedisTemplate)SpringUtils.getBean("redisTemplate"));
+                    strategy = dcsStrategy;
                     break;
                 default:
                     break;

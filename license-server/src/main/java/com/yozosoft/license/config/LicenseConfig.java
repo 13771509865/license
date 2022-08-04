@@ -16,4 +16,14 @@ public class LicenseConfig {
 
     @Value("${license.eni.publicKey}")
     private String eniPubKey;
+
+    @Value("${license.beat.beatPeriod}")
+    private Long beatPeriod;
+
+    @Value("${license.beat.beatTimeOut}")
+    private Long beatTimeOut;
+
+    @Value("${license.beat.checkBeatPeriod}")
+    private Long checkBeatPeriod;
+
 }

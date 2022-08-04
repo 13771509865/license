@@ -18,7 +18,7 @@ public class HeartBeatServiceImpl implements HeartBeatService {
 
     @Override
     public Boolean heartBeat(HeartBeatDTO heartBeatDTO) {
-        InstanceService instanceService = instanceManager.getInstanceService(heartBeatDTO.getTenantName(), heartBeatDTO.getNameSpace());
+        InstanceService instanceService = instanceManager.getIfAbsentInStanceService(heartBeatDTO.getTenantName(), heartBeatDTO.getNameSpace());
         Instance instance = instanceService.getInstance(heartBeatDTO.getInstanceId());
         if (instance == null) {
             throw new LicenseException(ResultCodeEnum.E_HEARTBEAT_INSTANCE_NOT_EXIST);
@@ -29,7 +29,7 @@ public class HeartBeatServiceImpl implements HeartBeatService {
         Integer beatPort = heartBeatDTO.getPort();
         if (ip.equals(beatIp) && port.equals(beatPort)) {
             //正确节点更新instance最新心跳时间
-            instanceService.processClientBeat(instance.getInstanceId());
+            instanceService.clientBeat(instance);
             return true;
         } else {
             throw new LicenseException(ResultCodeEnum.E_HEARTBEAT_INSTANCE_MATCH_FAIL);

@@ -28,7 +28,7 @@ public enum ResultCodeEnum {
 
     E_HEARTBEAT_ERROR(1005, "心跳监测失败"),
 
-    E_REGISTER_INSTANCE_MATCH_FAIL(1006, "服务注册异常,实例检查失败"),
+    E_REGISTER_INSTANCE_ALREADY_EXIST(1006, "服务注册异常,实例已存在"),
 
     E_HANDSHAKE_FAIL(1007, "握手失败"),
 
@@ -39,6 +39,10 @@ public enum ResultCodeEnum {
     E_CANCEL_INSTANCE_MATCH_FAIL(1014, "注销instance异常,实例检查失败"),
 
     E_CANCEL_ERROR(1015, "注销instance失败"),
+
+    E_INSTANCE_NOT_EXIST(1016, "实例不存在，或已失效"),
+
+    E_SECRET_NOT_EXIST(1017, "密钥不存在，或已失效"),
     /**
      * Dcs相关错误码2开头
      */

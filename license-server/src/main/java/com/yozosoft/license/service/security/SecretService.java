@@ -1,9 +1,11 @@
 package com.yozosoft.license.service.security;
 
+import com.yozosoft.license.common.constant.SysConstant;
 import com.yozosoft.license.config.LicenseConfig;
 import com.yozosoft.license.util.RSAUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +21,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SecretService {
 
     @Autowired
-    LicenseConfig licenseConfig;
-
-    private Map<Long, String> secrets = new ConcurrentHashMap<>();
+    private LicenseConfig licenseConfig;
 
     private String publicRSAKey;
 
     private String privateRSAKey;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @PostConstruct
     public void init() {
@@ -45,12 +48,24 @@ public class SecretService {
         return decrypt;
     }
 
+    /**
+     * 添加secret
+     */
     public void saveSecret(Long uuid, String secret) {
-        secrets.put(uuid, secret);
+        redisTemplate.opsForValue().set(SysConstant.REDIS_SECRET_PREFIX + uuid, secret);
     }
 
+    /**
+     * 获取secret
+     */
     public String getSecretByUuid(Long uuid) {
-        String secret = secrets.get(uuid);
-        return secret;
+        return (String) redisTemplate.opsForValue().get(SysConstant.REDIS_SECRET_PREFIX + uuid);
     }
+    /**
+     * 删除secret
+     */
+    public Boolean removeSecretByUuid(Long uuid) {
+        return redisTemplate.delete(SysConstant.REDIS_SECRET_PREFIX + uuid);
+    }
+
 }

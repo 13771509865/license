@@ -11,17 +11,17 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service("instanceManager")
 public class InstanceManager {
 
-    private Map<String, InstanceService> instanceServices = new ConcurrentHashMap<>();
+    private Map<String, InstanceService> instanceServiceMap = new ConcurrentHashMap<>();
 
     public InstanceService getIfAbsentInStanceService(String tenantName, String nameSpace) {
         String instanceKey = getInstanceKey(tenantName, nameSpace);
-        InstanceService instanceService = instanceServices.computeIfAbsent(instanceKey, key -> new InstanceService(tenantName));
+        InstanceService instanceService = instanceServiceMap.computeIfAbsent(instanceKey, key -> new InstanceService(tenantName, nameSpace));
         return instanceService;
     }
 
     public InstanceService getInstanceService(String tenantName, String nameSpace){
         String instanceKey = getInstanceKey(tenantName, nameSpace);
-        InstanceService instanceService = instanceServices.get(instanceKey);
+        InstanceService instanceService = instanceServiceMap.get(instanceKey);
         if(instanceService == null){
             throw new LicenseException(ResultCodeEnum.E_INSTANCE_SERVICE_NOT_EXIST);
         }
@@ -30,7 +30,7 @@ public class InstanceManager {
 
     public InstanceService removeInstanceService(String tenantName, String nameSpace){
         String instanceKey = getInstanceKey(tenantName, nameSpace);
-        InstanceService instanceService = instanceServices.remove(instanceKey);
+        InstanceService instanceService = instanceServiceMap.remove(instanceKey);
         if(instanceService == null){
             throw new LicenseException(ResultCodeEnum.E_INSTANCE_SERVICE_NOT_EXIST);
         }
