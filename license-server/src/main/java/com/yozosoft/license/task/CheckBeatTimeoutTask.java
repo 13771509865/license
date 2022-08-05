@@ -41,10 +41,11 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
         ScheduledThreadPoolExecutor scheduledThreadPool =
                 new ScheduledThreadPoolExecutor(1);
         //两个任务休息间隔CheckBeatPeriod
+        Long checkBeatPeriod = licenseConfig.getCheckBeatPeriod();
         scheduledThreadPool.scheduleWithFixedDelay(() -> {
 
             //尝试获取锁
-            Boolean flag = redisTemplate.opsForValue().setIfAbsent(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY, "",licenseConfig.getCheckBeatPeriod(),TimeUnit.MILLISECONDS);
+            Boolean flag = redisTemplate.opsForValue().setIfAbsent(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY, "", checkBeatPeriod,TimeUnit.MILLISECONDS);
 
             if (Boolean.FALSE.equals(flag)) {
                 // 加锁失败
@@ -64,8 +65,8 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
                 }
             });
             //释放锁
-            redisTemplate.delete(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY);
-        }, licenseConfig.getCheckBeatPeriod(), licenseConfig.getCheckBeatPeriod(), TimeUnit.MILLISECONDS);
+//            redisTemplate.delete(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY);
+        }, checkBeatPeriod, checkBeatPeriod, TimeUnit.MILLISECONDS);
     }
 
 
