@@ -63,7 +63,7 @@ public class InstanceService {
         strategy.checkReduceInstance(instance);
         instanceHandler.removeInstance(tenantName, nameSpace, instance.getInstanceId());
         secretService.removeSecretByUuid(instance.getInstanceId());
-        log.error("删除instance成功 tenantName：{} nameSpace：{} instanceId：{}",tenantName, nameSpace, instance.getInstanceId());
+        log.error("删除instance成功 tenantName：{} nameSpace：{} instanceId：{}", tenantName, nameSpace, JSON.toJSONString(instance));
     }
 
     public void clientBeat(Instance instance) {

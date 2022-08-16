@@ -10,12 +10,24 @@ import com.yozosoft.license.model.*;
  */
 public interface ClientStub {
 
+    /**
+     * 注册
+     */
     Object clientRegister(String serverHost, RegisterDTO registerDTO, String secret, Long uuid) throws ClientException;
 
+    /**
+     * 心跳
+     */
     Object clientBeat(String serverHost, HeartBeatDTO heartBeatDTO, String secret, Long uuid) throws ClientException;
 
+    /**
+     * 握手
+     */
     HandshakeResultDTO clientHandshake(String serverHost) throws ClientException;
 
+    /**
+     * 生成秘钥
+     */
     void clientExchangeSecret(String serverHost, SecretDTO secretDTO) throws ClientException;
 
     /**

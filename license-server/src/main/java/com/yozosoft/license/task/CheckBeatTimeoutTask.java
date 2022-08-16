@@ -55,7 +55,7 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
             Set<String> scan = scan(SysConstant.REDIS_INSTANCE_PREFIX);
             scan.forEach(key -> {
                 //instance#tenantName#nameSpace#1554661116183597056
-                String[] split = key.split("#");
+                String[] split = key.split(SysConstant.SEPARATOR);
                 //已超时,需要remove这个key
                 InstanceService instanceService = instanceManager.getIfAbsentInStanceService(split[1], split[2]);
                 Instance instance = instanceService.getInstance(Long.parseLong(split[3]));
