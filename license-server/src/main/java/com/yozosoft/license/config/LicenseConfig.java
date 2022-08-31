@@ -26,4 +26,7 @@ public class LicenseConfig {
     @Value("${license.beat.checkBeatPeriod}")
     private Long checkBeatPeriod;
 
+
+    @Value("${license.eniPath:#{null}}")
+    private String eniPath;
 }

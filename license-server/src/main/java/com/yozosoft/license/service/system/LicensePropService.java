@@ -1,8 +1,10 @@
 package com.yozosoft.license.service.system;
 
 import com.yozosoft.license.common.constant.SysConstant;
+import com.yozosoft.license.config.LicenseConfig;
 import com.yozosoft.license.model.bo.SysLicenseBO;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -31,6 +33,9 @@ public class LicensePropService implements ApplicationRunner {
     @Autowired
     EniService eniService;
 
+    @Autowired
+    LicenseConfig licenseConfig;
+
     @PreDestroy
     public void destroy() throws IOException {
         if (fileChannel != null) {
@@ -40,8 +45,13 @@ public class LicensePropService implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String rootPath = LicensePropService.class.getResource("/").getPath();
-        File licenseFile = new File(rootPath, SysConstant.LICENSE_FILE_NAME);
+        File licenseFile;
+        if (StringUtils.isNotBlank(licenseConfig.getEniPath())){
+            licenseFile = new File(licenseConfig.getEniPath(),SysConstant.LICENSE_FILE_NAME);
+        }else{
+            String rootPath = LicensePropService.class.getResource("/").getPath();
+            licenseFile = new File(rootPath, SysConstant.LICENSE_FILE_NAME);
+        }
         if (!licenseFile.isFile()) {
             System.out.println("授权文件不存在,授权中心启动失败\n" + licenseFile.getPath());
             System.exit(0);
