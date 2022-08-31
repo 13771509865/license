@@ -17,10 +17,10 @@ public class MachineCodeService {
         String featureCode = machineCodeService.getFeatureCode();
         System.out.println(featureCode);
 
-        String s = machineCodeService.decryptMachineCode("bWFjPTAwRkYxMDZGNkYyRSZpcD0yMC4xLjEuODImY3B1aWQ9QkZFQkZCRkYwMDA4MDZFQw==");
-        String s1 = machineCodeService.decryptMachineCode("bWFjPTAwRkYxMDZGNkYyRSZpcD0yMC4xLjEuNjkmY3B1aWQ9QkZFQkZCRkYwMDA4MDZFQw==");
-        System.out.println(s);
-        System.out.println(s1);
+//        String s = machineCodeService.decryptMachineCode("bWFjPTAwRkYxMDZGNkYyRSZpcD0yMC4xLjEuODImY3B1aWQ9QkZFQkZCRkYwMDA4MDZFQw==");
+//        String s1 = machineCodeService.decryptMachineCode("bWFjPTAwRkYxMDZGNkYyRSZpcD0yMC4xLjEuNjkmY3B1aWQ9QkZFQkZCRkYwMDA4MDZFQw==");
+//        System.out.println(s);
+//        System.out.println(s1);
     }
 
     public String getFeatureCode() {

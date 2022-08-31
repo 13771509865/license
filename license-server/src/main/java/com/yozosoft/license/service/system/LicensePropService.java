@@ -43,7 +43,7 @@ public class LicensePropService implements ApplicationRunner {
         String rootPath = LicensePropService.class.getResource("/").getPath();
         File licenseFile = new File(rootPath, SysConstant.LICENSE_FILE_NAME);
         if (!licenseFile.isFile()) {
-            System.out.println("授权文件不存在,授权中心启动失败");
+            System.out.println("授权文件不存在,授权中心启动失败\n" + licenseFile.getPath());
             System.exit(0);
         }
         //初始化获取授权eni文件内容,根据文件类型初始化各应用LicenseBO
