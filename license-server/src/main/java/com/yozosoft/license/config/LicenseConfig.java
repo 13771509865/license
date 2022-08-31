@@ -16,4 +16,7 @@ public class LicenseConfig {
 
     @Value("${license.eni.publicKey}")
     private String eniPubKey;
+
+    @Value("${license.eniPath:#{null}}")
+    private String eniPath;
 }
