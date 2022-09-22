@@ -43,11 +43,14 @@ public enum ResultCodeEnum {
     E_INSTANCE_NOT_EXIST(1016, "实例不存在，或已失效"),
 
     E_SECRET_NOT_EXIST(1017, "密钥不存在，或已失效"),
+    E_HEARTBEAT_LICENSE_EXPIRED(1018, "心跳监测异常,授权时间不在有效范围内"),
     /**
      * Dcs相关错误码2开头
      */
     E_DCS_ADD_STRATEGY_FAIL(2000, "并发数超过限制,请联系永中进行授权升级"),
     E_DCS_REDUCE_STRATEGY_FAIL(2001, "移除Dcs实例节点时策略检查失败"),
+    E_DCS_LICENSE_CONTENT_ERROR(2002, "Dcs授权文件异常,所需元数据校验不正确"),
+    E_DCS_LICENSE_EXPIRED(2003, "Dcs授权时间不在有效范围内"),
 
     /**
      * client调用错误9开头

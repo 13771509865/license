@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Map;
 
 @Component("dcsStrategy")
@@ -33,7 +34,13 @@ public class DcsStrategy implements Strategy {
 
         Map<String, String> metadata = instance.getMetadata();
         if (metadata == null || metadata.get(MetaDataConstant.CONCURRENCY_NUM) == null) {
-            throw new LicenseException(ResultCodeEnum.E_INVALID_PARAM);
+            throw new LicenseException(ResultCodeEnum.E_DCS_LICENSE_CONTENT_ERROR);
+        }
+
+        //检查授权时间是否合法
+        Boolean checkTime = checkLicenseTime();
+        if (!checkTime) {
+            throw new LicenseException(ResultCodeEnum.E_DCS_LICENSE_EXPIRED);
         }
 
         Long concurrencyNum = Long.valueOf(metadata.get(MetaDataConstant.CONCURRENCY_NUM));
@@ -69,9 +76,24 @@ public class DcsStrategy implements Strategy {
 //    }
 
 
-
     @Override
     public Object getClientResponse() {
         return licensePropService.getSysLicenseBO().getDcsLicense().getAllowTypes();
+    }
+
+    /**
+     * 检查授权时间
+     */
+    @Override
+    public Boolean checkLicenseTime() {
+        DcsLicenseBO dcsLicenseBO = licensePropService.getSysLicenseBO().getDcsLicense();
+        Date startTime = dcsLicenseBO.getStartTime();
+        Date expireTime = dcsLicenseBO.getExpireTime();
+        Date now = new Date();
+        if (now.after(startTime) && now.before(expireTime)) {
+            //服务器当前时间在授权合法时间内
+            return true;
+        }
+        return false;
     }
 }

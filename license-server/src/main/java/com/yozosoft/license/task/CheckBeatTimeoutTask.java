@@ -1,6 +1,5 @@
 package com.yozosoft.license.task;
 
-import com.alibaba.fastjson.JSON;
 import com.yozosoft.license.common.constant.SysConstant;
 import com.yozosoft.license.config.LicenseConfig;
 import com.yozosoft.license.model.Instance;
@@ -17,7 +16,6 @@ import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +28,7 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
     private LicenseConfig licenseConfig;
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private InstanceManager instanceManager;
@@ -45,7 +43,7 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
         scheduledThreadPool.scheduleWithFixedDelay(() -> {
 
             //尝试获取锁
-            Boolean flag = redisTemplate.opsForValue().setIfAbsent(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY, "", checkBeatPeriod,TimeUnit.MILLISECONDS);
+            Boolean flag = redisTemplate.opsForValue().setIfAbsent(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY, "", checkBeatPeriod, TimeUnit.MILLISECONDS);
 
             if (Boolean.FALSE.equals(flag)) {
                 // 加锁失败
@@ -72,6 +70,7 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
 
     /**
      * scan 实现
+     *
      * @param pattern 表达式，找出所有以 pattern 开始的键
      */
     private Set<String> scan(String pattern) {

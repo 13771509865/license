@@ -30,6 +30,8 @@ public class InstanceService {
     @Autowired
     private SecretService secretService;
 
+    public InstanceService() {
+    }
 
     public InstanceService(String tenantName, String nameSpace) {
         this.tenantName = tenantName;
@@ -67,9 +69,17 @@ public class InstanceService {
     }
 
     public void clientBeat(Instance instance) {
-        instance.setLastBeatMillis(System.currentTimeMillis());
-        instanceHandler.saveInstance(tenantName, nameSpace, instance);
-        log.info("心跳instance成功 tenantName：{} nameSpace：{} instance：{}", tenantName, nameSpace, JSON.toJSONString(instance));
+        //检查授权过期时间
+        Boolean checkTime = strategy.checkLicenseTime();
+        if (!checkTime) {
+            log.error("心跳检查异常,授权时间检查失败");
+            //TODO 可优化持久化数据的删除操作
+            throw new LicenseException(ResultCodeEnum.E_HEARTBEAT_LICENSE_EXPIRED);
+        } else {
+            instance.setLastBeatMillis(System.currentTimeMillis());
+            instanceHandler.saveInstance(tenantName, nameSpace, instance);
+            log.info("心跳instance成功 tenantName：{} nameSpace：{} instance：{}", tenantName, nameSpace, JSON.toJSONString(instance));
+        }
     }
 
     public Instance getInstance(Long instanceId) {
