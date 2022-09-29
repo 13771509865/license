@@ -64,7 +64,7 @@ public class CheckBeatTimeoutTask implements ApplicationRunner {
             });
             //释放锁
 //            redisTemplate.delete(SysConstant.CHECK_BEAT_TIMEOUT_LOCK_KEY);
-        }, checkBeatPeriod, checkBeatPeriod, TimeUnit.MILLISECONDS);
+        }, 0, checkBeatPeriod, TimeUnit.MILLISECONDS);
     }
 
 
