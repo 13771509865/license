@@ -51,7 +51,10 @@ public enum ResultCodeEnum {
     E_DCS_REDUCE_STRATEGY_FAIL(2001, "移除Dcs实例节点时策略检查失败"),
     E_DCS_LICENSE_CONTENT_ERROR(2002, "Dcs授权文件异常,所需元数据校验不正确"),
     E_DCS_LICENSE_EXPIRED(2003, "Dcs授权时间不在有效范围内"),
-
+    /**
+     * 文档平台相关错误码3开头
+     */
+    E_DOC_LICENSE_EXPIRED(3000, "文档平台授权时间不在有效范围内"),
     /**
      * client调用错误9开头
      */

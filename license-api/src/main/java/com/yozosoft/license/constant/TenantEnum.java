@@ -15,6 +15,7 @@ public enum TenantEnum {
      */
     E_DCS(1, "dcs", "Dcs服务"),
     E_EP(2, "ep", "云文档服务"),
+    E_DOC_MIDDLE(3, "docMiddle", "文档平台")
     ;
 
     private Integer tenantId;

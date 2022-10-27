@@ -16,4 +16,6 @@ public class SysLicenseBO {
     private Date createTime;
 
     private DcsLicenseBO dcsLicense;
+
+    private DocLicenseBO docLicense;
 }
