@@ -117,8 +117,10 @@ public class EniService {
         String mac = machineCodeMap.get(SysLicenseConstant.MACHINE_CODE_MAC);
         String uuid = machineCodeMap.get(SysLicenseConstant.MACHINE_CODE_UUID);
         Boolean cpuIdFlag = StringUtils.isBlank(cpuid) || contains(cpuid, machineCodeService.getCPUSerial());
-        Boolean ipFlag = StringUtils.isBlank(ip) || contains(ip, machineCodeService.getRealIp());
-        Boolean macFlag = StringUtils.isBlank(mac) || contains(mac, machineCodeService.getMac());
+        Boolean ipFlag = true;
+//        Boolean ipFlag = StringUtils.isBlank(ip) || contains(ip, machineCodeService.getRealIp());
+        Boolean macFlag = true;
+//        Boolean macFlag = StringUtils.isBlank(mac) || contains(mac, machineCodeService.getMac());
         Boolean uuidFlag = StringUtils.isBlank(uuid) || contains(uuid, machineCodeService.getSystemUuid());
         if (cpuIdFlag && ipFlag && macFlag && uuidFlag) {
             return true;
