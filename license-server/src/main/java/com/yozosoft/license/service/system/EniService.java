@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.yozosoft.license.common.constant.SysLicenseConstant;
 import com.yozosoft.license.config.LicenseConfig;
 import com.yozosoft.license.model.bo.DcsLicenseBO;
+import com.yozosoft.license.model.bo.DocLicenseBO;
 import com.yozosoft.license.model.bo.SysLicenseBO;
 import com.yozosoft.license.util.RSAUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -80,6 +81,8 @@ public class EniService {
         sysLicenseBO.setCreateTime(jsonObject.getDate(SysLicenseConstant.CREATE_TIME));
         DcsLicenseBO dcsLicenseBO = jsonObject.getObject(SysLicenseConstant.DCS_LICENSE, DcsLicenseBO.class);
         sysLicenseBO.setDcsLicense(dcsLicenseBO);
+        DocLicenseBO docLicenseBO = jsonObject.getObject(SysLicenseConstant.DOC_LICENSE, DocLicenseBO.class);
+        sysLicenseBO.setDocLicense(docLicenseBO);
         return sysLicenseBO;
     }
 

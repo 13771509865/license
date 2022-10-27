@@ -12,6 +12,8 @@ public class SysLicenseConstant {
 
     public static final String DCS_LICENSE = "dcsLicense";
 
+    public static final String DOC_LICENSE = "docLicense";
+
     public static final String MACHINE_CODE_CPUID = "cpuid";
 
     public static final String MACHINE_CODE_MAC = "mac";
