@@ -44,4 +44,3 @@ license:
     beatTimeOut: 300000 #心跳超时剔除节点时间
     checkBeatPeriod: 5000 #定时任务运行间隔
   eniPath:
-    F:\\1、fcs\\0、version\\license
