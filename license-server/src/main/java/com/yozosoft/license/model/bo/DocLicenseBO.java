@@ -66,7 +66,9 @@ public class DocLicenseBO extends BaseLicenseBO{
 
     private Boolean merge_split;
 
-    private Boolean extract_fill;
+    private Boolean pick_office;
+
+    private Boolean fill_office;
 
     private Boolean edit_document;
 }
