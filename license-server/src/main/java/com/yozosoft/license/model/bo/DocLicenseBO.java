@@ -52,11 +52,15 @@ public class DocLicenseBO extends BaseLicenseBO{
 
     private Boolean preview_with_revise;
 
+    private Boolean preview_with_note;
+
     private Boolean preview_with_sign;
 
     private Boolean convert_to_pdf;
 
-    private Boolean convert_to_ofd;
+    private Boolean convert_document_to_ofd;
+
+    private Boolean convert_pic_to_ofd;
 
     private Boolean convert_to_pic;
 
@@ -64,7 +68,13 @@ public class DocLicenseBO extends BaseLicenseBO{
 
     private Boolean convert_to_mp3;
 
-    private Boolean merge_split;
+    private Boolean merge_office;
+
+    private Boolean split_office;
+
+    private Boolean merge_pdf;
+
+    private Boolean split_pdf;
 
     private Boolean pick_office;
 
