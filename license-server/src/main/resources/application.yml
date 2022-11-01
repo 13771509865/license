@@ -16,7 +16,7 @@ spring:
     timeout: 20000 #设置客户端超时时间，单位是毫秒，默认为2000
     password: 123456 #密码
     #单机版
-    host: 127.0.0.1
+    host: 192.168.0.120
     port: 6379
     #集群版
     #    cluster:
@@ -43,4 +43,4 @@ license:
     beatPeriod: 30000 #客户端心跳间隔,单位毫秒,不允许小于30s
     beatTimeOut: 300000 #心跳超时剔除节点时间
     checkBeatPeriod: 5000 #定时任务运行间隔
-  eniPath:
+  eniPath: D:/fcs/license.eni

@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class DocLicenseBO extends BaseLicenseBO{
 
+    private Boolean platform;
     /**
      * 租户数量
      */
