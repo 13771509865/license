@@ -30,4 +30,10 @@ public class ClientException extends RuntimeException{
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
+
+    @Override
+    public void printStackTrace() {
+        super.printStackTrace();
+        System.out.println("当前异常错误码为:"+errorCode+",错误信息为:"+errorMessage);
+    }
 }

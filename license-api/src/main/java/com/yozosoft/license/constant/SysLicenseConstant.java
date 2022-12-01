@@ -1,4 +1,4 @@
-package com.yozosoft.license.common.constant;
+package com.yozosoft.license.constant;
 
 public class SysLicenseConstant {
 
@@ -21,4 +21,8 @@ public class SysLicenseConstant {
     public static final String MACHINE_CODE_IP = "ip";
 
     public static final String MACHINE_CODE_UUID = "docUuid";
+
+    public static final String START_TIME = "startTime";
+
+    public static final String EXPIRE_TIME = "expireTime";
 }

@@ -2,6 +2,7 @@ package com.yozosoft.license.util;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -119,7 +120,7 @@ public class RSAUtils {
             result = Arrays.copyOf(result, result.length+cache.length);
             System.arraycopy(cache, 0, result, result.length - cache.length, cache.length);
         }
-        String outStr = new String(result);
+        String outStr = new String(result, StandardCharsets.UTF_8);
         return outStr;
     }
 
@@ -182,7 +183,7 @@ public class RSAUtils {
             result = Arrays.copyOf(result, result.length+cache.length);
             System.arraycopy(cache, 0, result, result.length - cache.length, cache.length);
         }
-        String outStr = new String(result);
+        String outStr = new String(result, StandardCharsets.UTF_8);
         return outStr;
     }
 }

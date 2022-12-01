@@ -1,4 +1,4 @@
-package com.yozosoft.license.service.system;
+package com.yozosoft.license.client.impl;
 
 import org.apache.commons.lang3.StringUtils;
 

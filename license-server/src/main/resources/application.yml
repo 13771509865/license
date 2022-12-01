@@ -43,4 +43,4 @@ license:
     beatPeriod: 30000 #客户端心跳间隔,单位毫秒,不允许小于30s
     beatTimeOut: 300000 #心跳超时剔除节点时间
     checkBeatPeriod: 5000 #定时任务运行间隔
-  eniPath: D:/fcs/license.eni
+#  eniPath: D:/fcs/license.eni

@@ -59,6 +59,12 @@ public enum ResultCodeEnum {
      * client调用错误9开头
      */
     E_CLIENT_HTTP_FAIL(9000, "客户端http调用通信失败"),
+    E_CLIENT_AUTHORIZATION_NOT_EXIST(9001, "授权文件不存在"),
+    E_CLIENT_RESOLVE_AUTHORIZATION_FAIL(9002, "解析授权文件失败"),
+    E_CLIENT_AUTHORIZATION_EXPIRED(9003, "授权时间不在有效范围内"),
+    E_CLIENT_FORMAT_ERROR(9004, "授权内容校验有误"),
+
+    E_CLIENT_MACHINE_CODE_MISS_MATCH(9005, "授权机器码信息不匹配"),
     ;
 
 

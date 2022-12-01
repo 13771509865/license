@@ -3,7 +3,6 @@ package com.yozosoft.license.util;
 import cn.hutool.crypto.Mode;
 import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.symmetric.AES;
-import com.alibaba.fastjson2.JSON;
 
 import java.nio.charset.StandardCharsets;
 
