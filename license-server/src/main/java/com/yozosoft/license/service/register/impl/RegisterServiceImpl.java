@@ -42,7 +42,7 @@ public class RegisterServiceImpl implements RegisterService {
 //        instance.setHealthy(true);
         instance.setLastBeatMillis(nowMillis);
         //目前写死了超时时间为心跳间隔的10倍
-//        instance.setBeatTimeOut(instance.getBeatPeriod() * 10);
+       instance.setBeatTimeOut(instance.getBeatPeriod() * 10);
     }
 
     /**
