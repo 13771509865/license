@@ -1,7 +1,7 @@
 server:
   port: 18080
   servlet:
-    context-path: /
+    context-path: /license
 
 spring:
   application:
