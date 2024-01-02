@@ -22,7 +22,7 @@ import java.util.Optional;
 
 /**
  * @author zhoufeng
- * @description 全局异常处理
+ * @description 全局异常处理,处理各种异常
  * @create 2021-10-21 14:53
  **/
 @ControllerAdvice
@@ -44,6 +44,7 @@ public class GlobalDefaultExceptionHandler {
     @ResponseBody
     public ResponseEntity LicenseExceptionHandler(LicenseException e) {
         HttpStatus httpStatus = e.getHttpStatus();
+        System.out.println("httpStatus:"+httpStatus);
         httpStatus = Optional.ofNullable(httpStatus).orElse(HttpStatus.EXPECTATION_FAILED);
         return new ResponseEntity(ResultUtils.buildErrorResult(e.getErrorCode(), e.getErrorMessage(), null), httpStatus);
     }
